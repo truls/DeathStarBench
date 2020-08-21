@@ -14,7 +14,7 @@ ARG JAEGER_TRACING_VERSION="0.4.2"
 ARG NGINX_OPENTRACING_VERSION="0.8.0"
 ARG OPENTRACING_CPP_VERSION="1.5.1"
 ARG RESTY_J="1"
-ARG NUM_CPUS="40"
+ARG NUM_CPUS="6"
 ARG RESTY_CONFIG_OPTIONS="\
     --with-file-aio \
     --with-http_addition_module \
@@ -97,9 +97,10 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get update \
     && curl -fSL https://www.openssl.org/source/openssl-${RESTY_OPENSSL_VERSION}.tar.gz -o openssl-${RESTY_OPENSSL_VERSION}.tar.gz \
     && tar xzf openssl-${RESTY_OPENSSL_VERSION}.tar.gz \
     && curl -fSL https://ftp.pcre.org/pub/pcre/pcre-${RESTY_PCRE_VERSION}.tar.gz -o pcre-${RESTY_PCRE_VERSION}.tar.gz \
-    && tar xzf pcre-${RESTY_PCRE_VERSION}.tar.gz \
+    && tar xzf pcre-${RESTY_PCRE_VERSION}.tar.gz
+
   ### Build opentracing-cpp
-    && cd /tmp \
+RUN    cd /tmp \
     && curl -fSL https://github.com/opentracing/opentracing-cpp/archive/v${OPENTRACING_CPP_VERSION}.tar.gz -o opentracing-cpp-${OPENTRACING_CPP_VERSION}.tar.gz\
     && tar -zxf opentracing-cpp-${OPENTRACING_CPP_VERSION}.tar.gz \
     && cd opentracing-cpp-${OPENTRACING_CPP_VERSION} \
@@ -114,20 +115,42 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get update \
     && make -j${NUM_CPUS} install \
     && cd /tmp \
     && rm -rf opentracing-cpp-${OPENTRACING_CPP_VERSION}.tar.gz \
-              opentracing-cpp-${OPENTRACING_CPP_VERSION} \
+              opentracing-cpp-${OPENTRACING_CPP_VERSION}
+
+
   ### Build lua-resty-hmac
-    && cd /tmp \
+RUN    cd /tmp \
     && git clone https://github.com/jkeys089/lua-resty-hmac.git \
     && cd lua-resty-hmac \
-    && make \
+    && make -j${NUM_CPUS} \
     && make install \
     && cd /tmp \
-    && rm -rf lua-resty-hmac \
+    && rm -rf lua-resty-hmac
 
   ### Add Jaeger plugin
-    && cd /usr/local/lib \
-    && curl -fSL https://github.com/jaegertracing/jaeger-client-cpp/releases/download/v${JAEGER_TRACING_VERSION}/libjaegertracing_plugin.linux_amd64.so -o libjaegertracing_plugin.so
-
+RUN    cd /tmp \
+    && curl -fSl https://github.com/jaegertracing/jaeger-client-cpp/archive/v${JAEGER_TRACING_VERSION}.tar.gz -o jaeger-client-cpp-${JAEGER_TRACING_VERSION}.tar.gz \
+    && tar -zxf jaeger-client-cpp-${JAEGER_TRACING_VERSION}.tar.gz \
+    && rm jaeger-client-cpp-${JAEGER_TRACING_VERSION}.tar.gz \
+    && cd /tmp/jaeger-client-cpp-${JAEGER_TRACING_VERSION} \
+    && mkdir build \
+    && cd build \
+    && cat <<EOF > export.map \
+{ \
+    global: \
+        OpenTracingMakeTracerFactory; \
+    local: *; \
+}; \
+EOF \
+    && cmake -DCMAKE_BUILD_TYPE=Release \
+             -DJAEGERTRACING_PLUGIN=ON \
+             -DBUILD_TESTING=ON \
+             -DHUNTER_CONFIGURATION_TYPES=Release \
+             .. \
+    && make -j${NUM_CPUS} \
+    && ./DynamicallyLoadTracerTest libjaegertracing_plugin.so \
+    && cp libjaegertracing_plugin.so /usr/local/lib \
+    && rm -rf /tmp/jaeger-client-cpp-${JAEGER_TRACING_VERSION}
 
 RUN cd /usr/local \
     && curl -fSL https://github.com/opentracing-contrib/nginx-opentracing/archive/v${NGINX_OPENTRACING_VERSION}.tar.gz -o nginx-opentracing-${NGINX_OPENTRACING_VERSION}.tar.gz \
@@ -156,7 +179,7 @@ RUN cd /tmp \
         --with-lua=/usr/local/openresty/luajit \
         --lua-suffix=jit-2.1.0-beta3 \
         --with-lua-include=/usr/local/openresty/luajit/include/luajit-2.1 \
-    && make build \
+    && make -j${NUM_CPUS} build \
     && make install \
     && cd /tmp \
     && if [ -n "${RESTY_EVAL_POST_MAKE}" ]; then eval $(echo ${RESTY_EVAL_POST_MAKE}); fi \
