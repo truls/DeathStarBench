@@ -1,6 +1,20 @@
+# DeathStarBench fork information
+
+This fork of DeathStarBench targets arm64 compatibility. It tracks
+upstream except for the following:
+
+ - luajit (dependency of wrk2) has been bumped to version
+   2.1.0-beta3 which supports arm64
+ - x86-specific include has been removed form wrk2
+ - docker files have been updated to reference truls/ dockerhub images
+   which are compiled for arm64
+
+
+Original readme follows.
+
 # DeathStarBench
 
-Open-source benchmark suite for cloud microservices. DeathStarBench includes five end-to-end services, four for cloud systems, and one for cloud-edge systems running on drone swarms. 
+Open-source benchmark suite for cloud microservices. DeathStarBench includes five end-to-end services, four for cloud systems, and one for cloud-edge systems running on drone swarms.
 
 ## End-to-end Services <img src="microservices_bundle4.png" alt="suite-icon" width="40"/>
 
@@ -11,7 +25,7 @@ Open-source benchmark suite for cloud microservices. DeathStarBench includes fiv
 * Banking System (in progress)
 * Drone coordination system (in progress)
 
-## License & Copyright 
+## License & Copyright
 
 DeathStarBench is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, version 2.
 
