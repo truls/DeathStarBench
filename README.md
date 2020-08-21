@@ -6,7 +6,7 @@ upstream except for the following:
  - luajit (dependency of wrk2) has been bumped to version
    2.1.0-beta3 which supports arm64
  - x86-specific include has been removed form wrk2
- - docker files have been updated to reference truls/ dockerhub images
+ - docker files have been updated to reference trulsa/ dockerhub images
    which are compiled for arm64
 
 

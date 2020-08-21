@@ -11,7 +11,7 @@ services:
 #      - /etc/resolv.conf:/etc/resolv.conf
 
   social-graph-service:
-    image: truls/social-network-microservices
+    image: trulsa/social-network-microservices
     hostname: social-graph-service
 #    ports:
 #      - 10000:9090
@@ -33,7 +33,7 @@ services:
     restart: always
 
   write-home-timeline-service:
-    image: truls/social-network-microservices
+    image: trulsa/social-network-microservices
     hostname: write-home-timeline-service
     restart: always
     entrypoint: WriteHomeTimelineService
@@ -59,7 +59,7 @@ services:
     restart: always
 
   compose-post-service:
-    image: truls/social-network-microservices
+    image: trulsa/social-network-microservices
     hostname: compose-post-service
 #    ports:
 #      - 10001:9090
@@ -76,7 +76,7 @@ services:
     restart: always
 
   post-storage-service:
-    image: truls/social-network-microservices
+    image: trulsa/social-network-microservices
     hostname: post-storage-service
     ports:
       - 10002:9090
@@ -98,7 +98,7 @@ services:
     restart: always
 
   user-timeline-service:
-    image: truls/social-network-microservices
+    image: trulsa/social-network-microservices
     hostname: user-timeline-service
 #    ports:
 #      - 10003:9090
@@ -120,7 +120,7 @@ services:
     restart: always
 
   url-shorten-service:
-    image: truls/social-network-microservices
+    image: trulsa/social-network-microservices
     hostname: url-shorten-service
 #    ports:
 #      - 10004:9090
@@ -142,7 +142,7 @@ services:
     restart: always
 
   user-service:
-    image: truls/social-network-microservices
+    image: trulsa/social-network-microservices
     hostname: user-service
 #    ports:
 #      - 10005:9090
@@ -164,7 +164,7 @@ services:
     restart: always
 
   media-service:
-    image: truls/social-network-microservices
+    image: trulsa/social-network-microservices
     hostname: media-service
 #    ports:
 #      - 10006:9090
@@ -186,7 +186,7 @@ services:
     restart: always
 
   text-service:
-    image: truls/social-network-microservices
+    image: trulsa/social-network-microservices
     hostname: text-service
 #    ports:
 #      - 10007:9090
@@ -194,7 +194,7 @@ services:
     entrypoint: TextService
 
   unique-id-service:
-    image: truls/social-network-microservices
+    image: trulsa/social-network-microservices
     hostname: unique-id-service
 #    ports:
 #      - 10008:9090
@@ -202,7 +202,7 @@ services:
     entrypoint: UniqueIdService
 
   user-mention-service:
-    image: truls/social-network-microservices
+    image: trulsa/social-network-microservices
     hostname: user-mention-service
 #    ports:
 #      - 10009:9090
@@ -210,7 +210,7 @@ services:
     entrypoint: UserMentionService
 
   home-timeline-service:
-    image: truls/social-network-microservices
+    image: trulsa/social-network-microservices
     hostname: home-timeline-service
 #    ports:
 #      - 10010:9090
@@ -218,7 +218,7 @@ services:
     entrypoint: HomeTimelineService
 
   nginx-thrift:
-    image: truls/openresty-thrift:xenial
+    image: trulsa/openresty-thrift:xenial
     hostname: nginx-thrift
     ports:
       - 8080:8080
@@ -231,7 +231,7 @@ services:
       - ./gen-lua:/gen-lua
 
   media-frontend:
-    image: truls/media-frontend:xenial
+    image: trulsa/media-frontend:xenial
     hostname: media-frontend
     ports:
       - 8081:8080

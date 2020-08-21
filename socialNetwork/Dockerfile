@@ -1,4 +1,4 @@
-FROM truls/thrift-microservice-deps:xenial
+FROM trulsa/thrift-microservice-deps:xenial
 
 ARG NUM_CPUS=6
 
