@@ -1,6 +1,6 @@
 FROM truls/thrift-microservice-deps:xenial
 
-ARG NUM_CPUS=40
+ARG NUM_CPUS=6
 
 COPY ./ /social-network-microservices
 RUN cd /social-network-microservices \
