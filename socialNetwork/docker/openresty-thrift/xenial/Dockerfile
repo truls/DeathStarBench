@@ -129,7 +129,7 @@ RUN    cd /tmp \
 
   ### Add Jaeger plugin
 RUN    cd /tmp \
-    && curl -fSl https://github.com/jaegertracing/jaeger-client-cpp/archive/v${JAEGER_TRACING_VERSION}.tar.gz -o jaeger-client-cpp-${JAEGER_TRACING_VERSION}.tar.gz \
+    && curl -fSL https://github.com/jaegertracing/jaeger-client-cpp/archive/v${JAEGER_TRACING_VERSION}.tar.gz -o jaeger-client-cpp-${JAEGER_TRACING_VERSION}.tar.gz \
     && tar -zxf jaeger-client-cpp-${JAEGER_TRACING_VERSION}.tar.gz \
     && rm jaeger-client-cpp-${JAEGER_TRACING_VERSION}.tar.gz \
     && cd /tmp/jaeger-client-cpp-${JAEGER_TRACING_VERSION} \
