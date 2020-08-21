@@ -122,10 +122,9 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get update \
     && make -j${NUM_CPUS} \
     && make install \
     && cd /tmp \
-    && rm -rf lua-resty-hmac
-
+    && rm -rf lua-resty-hmac \
   ### Add Jaeger plugin
- RUN   cd /tmp \
+    && cd /tmp \
     && curl -fSL https://github.com/jaegertracing/jaeger-client-cpp/archive/v${JAEGER_TRACING_VERSION}.tar.gz -o jaeger-client-cpp-${JAEGER_TRACING_VERSION}.tar.gz \
     && tar -zxf jaeger-client-cpp-${JAEGER_TRACING_VERSION}.tar.gz \
     && rm jaeger-client-cpp-${JAEGER_TRACING_VERSION}.tar.gz \
@@ -145,9 +144,9 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get update \
     && make -j${NUM_CPUS} \
     && cp libjaegertracing_plugin.so /usr/local/lib \
     && rm -rf /root/.hunter \
-    && rm -rf /tmp/jaeger-client-cpp-${JAEGER_TRACING_VERSION}
+    && rm -rf /tmp/jaeger-client-cpp-${JAEGER_TRACING_VERSION} \
 
-RUN cd /usr/local \
+    && cd /usr/local \
     && curl -fSL https://github.com/opentracing-contrib/nginx-opentracing/archive/v${NGINX_OPENTRACING_VERSION}.tar.gz -o nginx-opentracing-${NGINX_OPENTRACING_VERSION}.tar.gz \
     && tar -zxf nginx-opentracing-${NGINX_OPENTRACING_VERSION}.tar.gz \
     && rm nginx-opentracing-${NGINX_OPENTRACING_VERSION}.tar.gz \
@@ -163,9 +162,9 @@ RUN cd /usr/local \
         openssl-${RESTY_OPENSSL_VERSION} \
         openssl-${RESTY_OPENSSL_VERSION}.tar.gz \
         openresty-${RESTY_VERSION}.tar.gz openresty-${RESTY_VERSION} \
-        pcre-${RESTY_PCRE_VERSION}.tar.gz pcre-${RESTY_PCRE_VERSION}
+        pcre-${RESTY_PCRE_VERSION}.tar.gz pcre-${RESTY_PCRE_VERSION} \
 
-RUN cd /tmp \
+    && cd /tmp \
     && curl -fSL https://github.com/luarocks/luarocks/archive/${RESTY_LUAROCKS_VERSION}.tar.gz -o luarocks-${RESTY_LUAROCKS_VERSION}.tar.gz \
     && tar xzf luarocks-${RESTY_LUAROCKS_VERSION}.tar.gz \
     && cd luarocks-${RESTY_LUAROCKS_VERSION} \
