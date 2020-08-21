@@ -135,13 +135,11 @@ RUN    cd /tmp \
     && cd /tmp/jaeger-client-cpp-${JAEGER_TRACING_VERSION} \
     && mkdir build \
     && cd build \
-    && cat <<EOF > export.map \
-{ \
-    global: \
-        OpenTracingMakeTracerFactory; \
-    local: *; \
-}; \
-EOF \
+    && echo '{\n\
+    global:\n\
+        OpenTracingMakeTracerFactory;\n\
+    local: *;\n\
+};\n' > export.map \
     && cmake -DCMAKE_BUILD_TYPE=Release \
              -DJAEGERTRACING_PLUGIN=ON \
              -DBUILD_TESTING=ON \
