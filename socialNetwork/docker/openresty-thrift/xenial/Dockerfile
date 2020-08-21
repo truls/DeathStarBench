@@ -97,10 +97,9 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get update \
     && curl -fSL https://www.openssl.org/source/openssl-${RESTY_OPENSSL_VERSION}.tar.gz -o openssl-${RESTY_OPENSSL_VERSION}.tar.gz \
     && tar xzf openssl-${RESTY_OPENSSL_VERSION}.tar.gz \
     && curl -fSL https://ftp.pcre.org/pub/pcre/pcre-${RESTY_PCRE_VERSION}.tar.gz -o pcre-${RESTY_PCRE_VERSION}.tar.gz \
-    && tar xzf pcre-${RESTY_PCRE_VERSION}.tar.gz
-
+    && tar xzf pcre-${RESTY_PCRE_VERSION}.tar.gz \
   ### Build opentracing-cpp
-RUN    cd /tmp \
+    && cd /tmp \
     && curl -fSL https://github.com/opentracing/opentracing-cpp/archive/v${OPENTRACING_CPP_VERSION}.tar.gz -o opentracing-cpp-${OPENTRACING_CPP_VERSION}.tar.gz\
     && tar -zxf opentracing-cpp-${OPENTRACING_CPP_VERSION}.tar.gz \
     && cd opentracing-cpp-${OPENTRACING_CPP_VERSION} \
@@ -115,11 +114,9 @@ RUN    cd /tmp \
     && make -j${NUM_CPUS} install \
     && cd /tmp \
     && rm -rf opentracing-cpp-${OPENTRACING_CPP_VERSION}.tar.gz \
-              opentracing-cpp-${OPENTRACING_CPP_VERSION}
-
-
+              opentracing-cpp-${OPENTRACING_CPP_VERSION} \
   ### Build lua-resty-hmac
-RUN    cd /tmp \
+    && cd /tmp \
     && git clone https://github.com/jkeys089/lua-resty-hmac.git \
     && cd lua-resty-hmac \
     && make -j${NUM_CPUS} \
@@ -128,7 +125,7 @@ RUN    cd /tmp \
     && rm -rf lua-resty-hmac
 
   ### Add Jaeger plugin
-RUN    cd /tmp \
+ RUN   cd /tmp \
     && curl -fSL https://github.com/jaegertracing/jaeger-client-cpp/archive/v${JAEGER_TRACING_VERSION}.tar.gz -o jaeger-client-cpp-${JAEGER_TRACING_VERSION}.tar.gz \
     && tar -zxf jaeger-client-cpp-${JAEGER_TRACING_VERSION}.tar.gz \
     && rm jaeger-client-cpp-${JAEGER_TRACING_VERSION}.tar.gz \
@@ -146,8 +143,8 @@ RUN    cd /tmp \
              -DHUNTER_CONFIGURATION_TYPES=Release \
              .. \
     && make -j${NUM_CPUS} \
-    && ./DynamicallyLoadTracerTest libjaegertracing_plugin.so \
     && cp libjaegertracing_plugin.so /usr/local/lib \
+    && rm -rf /root/.hunter \
     && rm -rf /tmp/jaeger-client-cpp-${JAEGER_TRACING_VERSION}
 
 RUN cd /usr/local \
