@@ -6,6 +6,8 @@ FROM ${RESTY_IMAGE_BASE}:${RESTY_IMAGE_TAG}
 LABEL maintainer="Yu Gan <yg397@cornell.edu>"
 
 # Docker Build Arguments
+ARG RESTY_VERSION="1.15.8.3"
+ARG RESTY_LUAROCKS_VERSION="3.3.1"
 ARG RESTY_OPENSSL_VERSION="1.1.0j"
 ARG RESTY_PCRE_VERSION="8.42"
 ARG JAEGER_TRACING_VERSION="0.4.2"
@@ -116,11 +118,8 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get update \
     && cd /usr/local \
     && curl -fSL https://github.com/opentracing-contrib/nginx-opentracing/archive/v${NGINX_OPENTRACING_VERSION}.tar.gz -o nginx-opentracing-${NGINX_OPENTRACING_VERSION}.tar.gz \
     && tar -zxf nginx-opentracing-${NGINX_OPENTRACING_VERSION}.tar.gz \
-    && rm nginx-opentracing-${NGINX_OPENTRACING_VERSION}.tar.gz
-
-ARG RESTY_VERSION="1.15.8.3"
-
-RUN  cd /tmp \
+    && rm nginx-opentracing-${NGINX_OPENTRACING_VERSION}.tar.gz \
+    && cd /tmp \
     && curl -fSL https://openresty.org/download/openresty-${RESTY_VERSION}.tar.gz -o openresty-${RESTY_VERSION}.tar.gz \
     && tar xzf openresty-${RESTY_VERSION}.tar.gz \
     && cd /tmp/openresty-${RESTY_VERSION} \
@@ -132,11 +131,8 @@ RUN  cd /tmp \
         openssl-${RESTY_OPENSSL_VERSION} \
         openssl-${RESTY_OPENSSL_VERSION}.tar.gz \
         openresty-${RESTY_VERSION}.tar.gz openresty-${RESTY_VERSION} \
-        pcre-${RESTY_PCRE_VERSION}.tar.gz pcre-${RESTY_PCRE_VERSION}
-
-ARG RESTY_LUAROCKS_VERSION="3.3.1"
-
-RUN cd /tmp \
+        pcre-${RESTY_PCRE_VERSION}.tar.gz pcre-${RESTY_PCRE_VERSION} \
+    && cd /tmp \
     && curl -fSL https://github.com/luarocks/luarocks/archive/v${RESTY_LUAROCKS_VERSION}.tar.gz -o luarocks-${RESTY_LUAROCKS_VERSION}.tar.gz \
     && tar xzf luarocks-${RESTY_LUAROCKS_VERSION}.tar.gz \
     && cd luarocks-${RESTY_LUAROCKS_VERSION} \
