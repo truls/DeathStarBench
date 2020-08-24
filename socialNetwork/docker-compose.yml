@@ -241,7 +241,7 @@ services:
       - ./media-frontend/conf/nginx.conf:/usr/local/openresty/nginx/conf/nginx.conf
 
   jaeger:
-    image: jaegertracing/all-in-one:latest
+    image: trulsa/jaeger-all-in-one-linux-arm64
     hostname: jaeger
     ports:
 #      - 5775:5775/udp
