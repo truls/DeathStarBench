@@ -15,6 +15,37 @@ ARG NGINX_OPENTRACING_VERSION="0.8.0"
 ARG OPENTRACING_CPP_VERSION="1.5.1"
 ARG RESTY_J="1"
 ARG NUM_CPUS="6"
+ARG RESTY_CONFIG_OPTIONS="\
+    --with-file-aio \
+    --with-http_addition_module \
+    --with-http_auth_request_module \
+    --with-http_dav_module \
+    --with-http_flv_module \
+    --with-http_geoip_module=dynamic \
+    --with-http_gunzip_module \
+    --with-http_gzip_static_module \
+    --with-http_image_filter_module=dynamic \
+    --with-http_mp4_module \
+    --with-http_random_index_module \
+    --with-http_realip_module \
+    --with-http_secure_link_module \
+    --with-http_slice_module \
+    --with-http_ssl_module \
+    --with-http_stub_status_module \
+    --with-http_sub_module \
+    --with-http_v2_module \
+    --with-http_xslt_module=dynamic \
+    --with-ipv6 \
+    --with-mail \
+    --with-mail_ssl_module \
+    --with-md5-asm \
+    --with-pcre-jit \
+    --with-sha1-asm \
+    --with-stream \
+    --with-stream_ssl_module \
+    --with-threads \
+    --add-dynamic-module=/usr/local/nginx-opentracing-${NGINX_OPENTRACING_VERSION}/opentracing \
+    "
 ARG RESTY_CONFIG_OPTIONS_MORE=""
 ARG RESTY_ADD_PACKAGE_BUILDDEPS=""
 ARG RESTY_ADD_PACKAGE_RUNDEPS=""
