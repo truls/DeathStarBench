@@ -1,6 +1,6 @@
 FROM trulsa/thrift-microservice-deps:xenial
 
-ARG NUM_CPUS=6
+ARG NUM_CPUS=3
 
 COPY ./ /media-microservices
 RUN cd /media-microservices \
