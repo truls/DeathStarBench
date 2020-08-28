@@ -242,6 +242,12 @@ services:
 #      - 11221:11211
     restart: always
 
+  consul:
+    image: consul
+    hostname: consul
+    ports:
+      - 8500:8500
+
   jaeger:
     image: trulsa/jaeger-all-in-one-linux-arm64
     hostname: jaeger
