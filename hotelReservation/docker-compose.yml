@@ -10,8 +10,7 @@ services:
     restart: always
 
   frontend:
-    build: .
-    image: hotel_reserv_frontend_single_node
+    image: trulsa/hotel-reservation-microservices
     entrypoint: frontend
     container_name: 'hotel_reserv_frontend'
     ports:
@@ -22,8 +21,7 @@ services:
 #    cpuset: "0"
 
   profile:
-    build: .
-    image: hotel_reserv_profile_single_node
+    image: trulsa/hotel-reservation-microservices
     entrypoint: profile
     container_name: 'hotel_reserv_profile'
     ports:
@@ -36,8 +34,7 @@ services:
 #    cpuset: "1"
 
   search:
-    build: .
-    image: hotel_reserv_search_single_node
+    image: trulsa/hotel-reservation-microservices
     entrypoint: search
     container_name: 'hotel_reserv_search'
     ports:
@@ -51,8 +48,7 @@ services:
       # - GRPC_GO_LOG_SEVERITY_LEVEL=info
 
   geo:
-    build: .
-    image: hotel_reserv_geo_single_node
+    image: trulsa/hotel-reservation-microservices
     entrypoint: geo
     container_name: 'hotel_reserv_geo'
     ports:
@@ -64,8 +60,7 @@ services:
 #    cpuset: "3"
 
   rate:
-    build: .
-    image: hotel_reserv_rate_single_node
+    image: trulsa/hotel-reservation-microservices
     entrypoint: rate
     container_name: 'hotel_reserv_rate'
     ports:
@@ -78,8 +73,7 @@ services:
 #    cpuset: "4"
 
   recommendation:
-    build: .
-    image: hotel_reserv_recommend_single_node
+    image: trulsa/hotel-reservation-microservices
     entrypoint: recommendation
     container_name: 'hotel_reserv_recommendation'
     ports:
@@ -91,8 +85,7 @@ services:
 #    cpuset: "5"
 
   user:
-    build: .
-    image: hotel_reserv_user_single_node
+    image: trulsa/hotel-reservation-microservices
     entrypoint: user
     container_name: 'hotel_reserv_user'
     ports:
@@ -104,8 +97,7 @@ services:
 #    cpuset: "6"
 
   reservation:
-    build: .
-    image: hotel_reserv_rsv_single_node
+    image: trulsa/hotel-reservation-microservices
     entrypoint: reservation
     container_name: 'hotel_reserv_reservation'
     ports:
