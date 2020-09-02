@@ -8,6 +8,16 @@ upstream except for the following:
  - x86-specific include has been removed form wrk2
  - docker files have been updated to reference trulsa/ dockerhub images
    which are compiled for arm64
+ - wrk2 has been consolidated in the tools/wrk2 folder and the
+   benchmarking scripts for the individual benchmarks can be found in
+   the tools/wrk2/scripts folder
+ - An arm64 build of wrk2 including the benchmarking scripts is
+   available from the trulsa/wrk2 docker iamge. The wrk2 folder is
+   located at `/wrk2` in the image. To use it, invoke the wrk2
+   commands as
+   ```
+   docker run --rm --network host trulsa/wrk2 /wrk2/wrk
+   ```
 
 
 Original readme follows.
